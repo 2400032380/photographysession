@@ -1,0 +1,20 @@
+services:
+  backend:
+    image: viswasindhusri/docker-backend:latest
+    container_name: photography-backend
+    ports:
+      - "2009:2008"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5434/photographydb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    restart: unless-stopped
+
+  frontend:
+    image: viswasindhusri/docker-frontend:latest
+    container_name: photography-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
